@@ -3,6 +3,8 @@ require 'net/http'
 class WeatherForecastFetchService
   class << self
     def execute(address, opts)
+      raise ApiError::BadlyFormatedAddress.new('Please provide a valid address') if address.blank?
+
       # Since we are using Google's api, we can send any address.
       # To avoid another call to the geocoding api just to rediscover the zip code
       # over and over, I'm caching each address string (even a zip code) to the
@@ -37,7 +39,8 @@ class WeatherForecastFetchService
       result = {
         **geocoding_result,
         **weather_result,
-        cached: false
+        cached: false,
+        expires_at: nil
       }
 
       save_to_cache(result[:zip_code], result)
@@ -60,6 +63,7 @@ class WeatherForecastFetchService
 
       unless cached.nil?
         Rails.logger.info("Found in cache, key: #{key}")
+
         return cached.merge(cached: true)
       end
 
@@ -67,7 +71,8 @@ class WeatherForecastFetchService
     end
 
     def save_to_cache(key, value)
-      Rails.cache.write(key, value)
+      expires_at = Time.now + 30.minutes
+      Rails.cache.write(key, value.merge(expires_at:))
       value
     end
   end
