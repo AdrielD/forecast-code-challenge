@@ -36,7 +36,8 @@ class WeatherForecastFetchService
 
       result = {
         **geocoding_result,
-        **weather_result
+        **weather_result,
+        cached: false
       }
 
       save_to_cache(result[:zip_code], result)
@@ -59,7 +60,7 @@ class WeatherForecastFetchService
 
       unless cached.nil?
         Rails.logger.info("Found in cache, key: #{key}")
-        return cached
+        return cached.merge(cached: true)
       end
 
       nil
