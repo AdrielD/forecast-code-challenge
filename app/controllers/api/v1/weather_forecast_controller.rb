@@ -6,7 +6,7 @@ class Api::V1::WeatherForecastController < ApiController
       days: index_params[:days],
     )
 
-    render json: { message: result },status: :ok
+    render json: result,status: :ok
   end
 
   private
