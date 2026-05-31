@@ -9,15 +9,25 @@
   <body>
     <div id="app">
       <div id="message"></div>
-      <h2>Adriel's Awesome Weather Forecast Service</h2>
-      Type your address:
-      <input id="address" type="text" />
-      Temperature Unit:
-      <select id="units">
-        <option value="METRIC">Metric</option>
-        <option value="IMPERIAL">Imperial</option>
-      </select>
-      <button id="submit">Get Forecast</button>
+      <div class="flex flex-col">
+        <h2 class="text-3xl font-bold underline">Adriel's Awesome Weather Forecast Service</h2>
+        <div>
+          Type your address:
+          <input id="address" type="text" />
+        </div>
+        <div>
+          Temperature Unit:
+          <select id="units">
+            <option value="METRIC">Metric</option>
+            <option value="IMPERIAL">Imperial</option>
+          </select>
+        </div>
+        <div>
+          Day range:
+          <input id="days" type="number" max="5" min="1" value="5" />
+        </div>
+        <button id="submit">Get Forecast</button>
+      </div>
       <div id="results"></div>
     </div>
     <script type="module" src="/src/main.ts"></script>

@@ -6,15 +6,17 @@ window.onload = () => {
   const submitButton = document.getElementById('submit') as HTMLButtonElement;
   const addressField = document.getElementById('address') as HTMLInputElement;
   const unitsField = document.getElementById('units') as HTMLInputElement;
+  const daysField = document.getElementById('days') as HTMLInputElement;
   const results = document.getElementById('results') as HTMLDivElement;
   const message = document.getElementById('message') as HTMLDivElement;
 
   submitButton.addEventListener('click', async () => {
     const address = `address=${encodeURIComponent(addressField.value)}`;
     const units = `units_system=${encodeURIComponent(unitsField.value)}`;
+    const days = `days=${encodeURIComponent(daysField.value)}`;
 
     try {
-      const result = await axios.get(`/api/v1/weather_forecast?${address}&${units}`);
+      const result = await axios.get(`/api/v1/weather_forecast?${address}&${units}&${days}`);
 
       const d = result.data;
 
@@ -31,9 +33,9 @@ window.onload = () => {
         `).join('')}
         <hr>
         ${ d.cached ? `
-            <span>Cached result</span>
+            <span class="text-gray-500">Cached result</span>
             </br>
-            <span>Expires at: ${d.expires_at}</span>
+            <span class="text-gray-500">Expires at: ${d.expires_at}</span>
           ` : ''
         }
       `;

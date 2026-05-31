@@ -3,7 +3,7 @@ class Api::V1::WeatherForecastController < ApiController
     result = WeatherForecastFetchService.execute(
       index_params[:address],
       units_system: index_params[:units_system],
-      days: index_params[:days],
+      days: index_params[:days].to_i,
     )
 
     render json: result,status: :ok

@@ -4,7 +4,7 @@ class GoogleApiService::Weather
 
   UNITS_SYSTEMS = ['METRIC', 'IMPERIAL'].freeze
 
-  def self.fetch(latitude, longitude, units_system: nil,days: nil)
+  def self.fetch(latitude, longitude, units_system: nil, days: nil)
     units_system ||= 'METRIC'
     days ||= 7
     raise ApiError::InvalidUnitsSystem.new('Invalid unit') unless UNITS_SYSTEMS.include?(units_system)
